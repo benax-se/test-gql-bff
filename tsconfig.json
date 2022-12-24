@@ -3,11 +3,10 @@
     "rootDirs": ["src"],
     "outDir": "dist",
     "lib": ["ES6"],
-    "target": "es2020",
-    "module": "esnext",
+    "target": "ES2022",
+    "module": "ES2022",
     "moduleResolution": "node",
     "esModuleInterop": true,
     "types": ["node"]
-  },
-  "include": ["src/**/*.ts"],
+  }
 }

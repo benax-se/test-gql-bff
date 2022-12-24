@@ -4,7 +4,6 @@ type Geo {
 }
 
 type Address {
-  id: ID!
   street: String!
   suite: String!
   city: String!
@@ -17,7 +16,7 @@ type User {
   name: String!
   username: String!
   email: String!
-  address: ClientAddress!
+  address: Address!
 }
 
 type Todo {
@@ -27,7 +26,7 @@ type Todo {
 }
 
 type Query {
-  todos: [Todos!]!
+  todos(skip: Int, limit: Int): [Todo!]!
   todo(id: ID!): Todo!
-  users: [ClientUser!]!
+  users: [User!]!
 }
