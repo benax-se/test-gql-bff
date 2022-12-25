@@ -10,3 +10,8 @@ generates:
       - "typescript-resolvers"
     config:
       useIndexSignature: true
+config:
+  mappers:
+    Todo: '../../../api/todo/api-types#TodoRestApiDTO'
+    User: '../../../api/todo/api-types#UserRestApiDTO'
+watch: true

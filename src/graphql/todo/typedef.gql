@@ -17,16 +17,17 @@ type User {
   username: String!
   email: String!
   address: Address!
+  todos: [Todo!]!
 }
 
 type Todo {
   id: ID!
-  title: String!
-  user: User
+  title: String! @stream
+  user: User @defer
 }
 
-type Query {
+extend type Query {
   todos(skip: Int, limit: Int): [Todo!]!
-  todo(id: ID!): Todo!
+  todo(id: ID!): Todo! @deprecated
   users: [User!]!
 }

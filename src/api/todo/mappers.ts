@@ -1,9 +1,4 @@
-import { TodoRestApiDTO, UserRestApiDTO } from './api-types';
-
-export const mapTodoFromDTO = (todo: TodoRestApiDTO) => ({
-  ...todo,
-  id: todo.id.toString()
-})
+import { UserRestApiDTO } from './api-types';
 
 export const mapUserFromDTO = (user: UserRestApiDTO) => ({
   ...user,

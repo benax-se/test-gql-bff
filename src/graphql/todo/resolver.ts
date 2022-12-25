@@ -1,10 +1,5 @@
-import { getTodo, getTodos, getUser, getUsers } from '../../api/todo';
-import Dataloader from 'dataloader';
-import { Resolvers, User } from './__generated__/resolvers-types';
-
-const userLoader = new Dataloader((userIds: string[]) =>
-  Promise.all(userIds.map((userId) => getUser(userId)))
-);
+import { getTodo, getTodos, getUser, getUsers } from '../../api/todo/index';
+import { Resolvers, User, Query } from './__generated__/resolvers-types';
 
 export const resolver: Resolvers = {
   Query: {
@@ -18,45 +13,40 @@ export const resolver: Resolvers = {
         apiTodos = apiTodos.slice(0, args.limit)
       }
 
-      return apiTodos.map(({ userId, ...todo }) => ({
-        __typename: 'Todo',
-        ...todo,
-        user: {
-          id: userId,
-        } as unknown as User,
-      }));
+      return apiTodos
     },
     todo: async (_, args) => {
-      const { userId, ...apiTodo } = await getTodo(args.id);
+      const todo = await getTodo(parseInt(args.id));
 
-      return {
-        __typename: 'Todo',
-        ...apiTodo,
-        user: {
-          id: userId.toString(),
-        } as unknown as User,
-      };
+      return todo
     },
     users: async () => {
       const apiUsers = await getUsers();
 
-      return apiUsers.map((user) => ({
-        __typename: 'User',
-        ...user,
-      }));
+      return apiUsers
     },
   },
-
   Todo: {
-    user: async (parent) => {
-      const user = await userLoader.load(parent.user.id);
-
-      return {
-        __typename: 'User',
-        ...user,
-      };
+    id(parent) {
+      return parent.id.toString()
+    },
+    user(parent) {
+      return getUser(parent.userId)
+    },
+    title(parent){
+      return parent.title
     },
   },
+  User: {
+    id(parent) {
+      return parent.id.toString()
+    },
+    async todos(parent, args){
+      const todos = await getTodos()
+
+      return todos.filter(item => item.userId === parent.id)
+    },
+  }
 };
 
 export default resolver;

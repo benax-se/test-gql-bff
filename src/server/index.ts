@@ -1,5 +1,5 @@
 import { ApolloServer } from '@apollo/server';
-import { schema } from '../graphql';
+import { schema } from '../graphql/index';
 
 export const server = new ApolloServer({ schema });
 

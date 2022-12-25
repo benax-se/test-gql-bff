@@ -1,4 +1,5 @@
 import { GraphQLResolveInfo } from 'graphql';
+import { TodoRestApiDTO, UserRestApiDTO } from '../../../api/todo/api-types';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
@@ -31,6 +32,7 @@ export type Geo = {
 
 export type Query = {
   __typename?: 'Query';
+  /** @deprecated Field no longer supported */
   todo: Todo;
   todos: Array<Todo>;
   users: Array<User>;
@@ -60,6 +62,7 @@ export type User = {
   email: Scalars['String'];
   id: Scalars['ID'];
   name: Scalars['String'];
+  todos: Array<Todo>;
   username: Scalars['String'];
 };
 
@@ -141,8 +144,8 @@ export type ResolversTypes = ResolversObject<{
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Query: ResolverTypeWrapper<{}>;
   String: ResolverTypeWrapper<Scalars['String']>;
-  Todo: ResolverTypeWrapper<Todo>;
-  User: ResolverTypeWrapper<User>;
+  Todo: ResolverTypeWrapper<TodoRestApiDTO>;
+  User: ResolverTypeWrapper<UserRestApiDTO>;
 }>;
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -155,8 +158,8 @@ export type ResolversParentTypes = ResolversObject<{
   Int: Scalars['Int'];
   Query: {};
   String: Scalars['String'];
-  Todo: Todo;
-  User: User;
+  Todo: TodoRestApiDTO;
+  User: UserRestApiDTO;
 }>;
 
 export type AddressResolvers<ContextType = any, ParentType extends ResolversParentTypes['Address'] = ResolversParentTypes['Address']> = ResolversObject<{
@@ -192,6 +195,7 @@ export type UserResolvers<ContextType = any, ParentType extends ResolversParentT
   email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  todos?: Resolver<Array<ResolversTypes['Todo']>, ParentType, ContextType>;
   username?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
